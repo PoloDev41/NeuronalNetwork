@@ -9,15 +9,8 @@ namespace NeuronalNetwork.Neuronal
     /// <summary>
     /// handle a fully connect neuronal network
     /// </summary>
-    public class FullyConnectedNetwork
+    public class FullyConnectedNetwork: BaseNeuronalNetwork
     {
-        /// <summary>
-        /// layers of the network
-        /// </summary>
-        public Layer[] Layers { get; internal set; }
-
-        public double[] LastOuputs { get; internal set; }
-
         /// <summary>
         /// create a fully connected network
         /// </summary>
@@ -34,18 +27,6 @@ namespace NeuronalNetwork.Neuronal
             {
                 Layers[i] = new Layer(nbrNeuroneOnLayer[i-1], nbrNeuroneOnLayer[i]);
             }
-        }
-
-        public double[] ComputeOutputs(double[] inputs)
-        {
-            double[] layerOuts = Layers[0].ComputeOutputs(inputs);
-            for (int i = 1; i < Layers.Length; i++)
-            {
-                layerOuts = Layers[1].ComputeOutputs(layerOuts);
-            }
-            LastOuputs = layerOuts;
-
-            return layerOuts;
         }
     }
 }

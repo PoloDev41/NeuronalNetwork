@@ -22,10 +22,18 @@ namespace NeuronalNetwork.Neuronal
         /// </summary>
         public IActivationFunction ActionFunction { get; internal set; }
 
+        public double Error { get; internal set; }
+
+        private double[] _lastInputs;
+
+        private double _lastSum = 0;
+
         /// <summary>
         /// last output of the neurone
         /// </summary>
         public double LastOutput { get; internal set; }
+
+        public double LastQuadraticError { get; set; }
 
         public Neurone(int numberInput, IActivationFunction function)
         {
@@ -43,6 +51,8 @@ namespace NeuronalNetwork.Neuronal
             if (inputs.Length != Weight.Length - 1)
                 throw new ArgumentException("inputs are not the same length same weight");
 
+            _lastInputs = inputs;
+
             double sum = 0;
             for (int i = 0; i < inputs.Length; i++)
             {
@@ -50,9 +60,26 @@ namespace NeuronalNetwork.Neuronal
             }
             sum += Weight[Weight.Length - 1]; //don't forget the threshold
 
-            LastOutput = sum / Weight.Length;
+            _lastSum = sum;
+            LastOutput = ActionFunction.ComputeValue(_lastSum);
 
             return LastOutput;
+        }
+
+        public double ComputeError(double error)
+        {
+            Error = ActionFunction.ComputeDerivateValue(_lastSum) * (error);
+            return Error;
+        }
+
+        public void RefreshWeights(double epsilon, double[] inputs)
+        {
+            for (int i = 0; i < Weight.Length-1; i++)
+            {
+                Weight[i] += epsilon * Error * inputs[i];
+            }
+
+            Weight[Weight.Length -1 ] += epsilon * Error;
         }
     }
 }

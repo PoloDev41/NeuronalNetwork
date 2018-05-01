@@ -42,8 +42,11 @@
   <ItemGroup>
     <Compile Include="ActivationFunctions\DoubleSigmoide.cs" />
     <Compile Include="ActivationFunctions\IActivationFunction.cs" />
+    <Compile Include="Learner\BackPropagationGradiant.cs" />
+    <Compile Include="Learner\Sample.cs" />
     <Compile Include="Neuronal\FullyConnectedNetwork.cs" />
     <Compile Include="Neuronal\Layer.cs" />
+    <Compile Include="Neuronal\BaseNeuronalNetwork.cs" />
     <Compile Include="Neuronal\Neurone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

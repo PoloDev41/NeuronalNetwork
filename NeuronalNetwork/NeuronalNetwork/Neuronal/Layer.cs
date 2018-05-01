@@ -45,5 +45,28 @@ namespace NeuronalNetwork.Neuronal
             }
             return LastOutputs;
         }
+
+        public void ComputeError(double[] expected)
+        {
+            for (int i = 0; i < Neurones.Length; i++)
+            {
+                Neurones[i].ComputeError(expected[i]);
+            }
+        }
+
+        public double[] ComputePonderateError()
+        {
+            double[] ponderate = new double[Neurones[0].Weight.Length-1];
+            for (int i = 0; i < Neurones[0].Weight.Length-1; i++)
+            {
+                ponderate[i] = 0;
+                for (int j = 0; j < Neurones.Length; j++)
+                {
+                    ponderate[i] += Neurones[j].Error * Neurones[j].Weight[i];
+                }
+            }
+
+            return ponderate;
+        }
     }
 }
